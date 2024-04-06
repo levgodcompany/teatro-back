@@ -1,0 +1,153 @@
+{
+    "name": "Teatro",
+    "logo": "https://logo",
+    "rooms": [
+      {
+        "name": "Room 1",
+        "description": "Description of Room 1",
+        "capacity": 20,
+        "dimensions": {
+          "length": "20m",
+          "width": "30m",
+          "height": "3m"
+        },
+        "imgs": ["1.jpg", "2.jpg", "3.jpg"],
+        "value": "$20,000",
+        "shifts": [
+          {
+            "day": "2024-04-03",
+            "shifts": [
+              {
+                "date": "2024-04-03",
+                "startTime": "10:00",
+                "endTime": "11:00",
+                "rentedBy": null,
+                "reservedOn": null,
+                "bookedOn": null,
+                "cancelableUntil": null,
+                "canceled": false,
+                "reserved": false,
+                "confirmed": false
+              },
+              {
+                "date": "2024-04-03",
+                "startTime": "12:00",
+                "endTime": "13:00",
+                "rentedBy": {
+                  "name": "Leandro",
+                  "email": "leandroveron110@gmail.com",
+                  "phone": "3442622763",
+                  "altPhone": "3442622765"
+                },
+                "reservedOn": {
+                  "name": "Leandro",
+                  "lasName": "Veron",
+                  "dni": "12345678",
+                  "age": "30",
+                  "email": "leandroveron110@gmail.com",
+                  "cel": "3442622763",
+                  "reservedRoom": [],
+                  "token": "token123"
+                },
+                "bookedOn": "2024-04-01",
+                "cancelableUntil": "2024-04-08T12:00:00",
+                "canceled": false,
+                "reserved": true,
+                "confirmed": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Room 2",
+        "description": "Description of Room 2",
+        "capacity": 30,
+        "dimensions": {
+          "length": "25m",
+          "width": "35m",
+          "height": "4m"
+        },
+        "imgs": ["4.jpg", "5.jpg", "6.jpg"],
+        "value": "$25,000",
+        "shifts": [
+          {
+            "day": "2024-04-03",
+            "shifts": [
+              {
+                "date": "2024-04-03",
+                "startTime": "10:00",
+                "endTime": "11:00",
+                "rentedBy": null,
+                "reservedOn": null,
+                "bookedOn": null,
+                "cancelableUntil": null,
+                "canceled": false,
+                "reserved": false,
+                "confirmed": false
+              },
+              {
+                "date": "2024-04-03",
+                "startTime": "12:00",
+                "endTime": "13:00",
+                "rentedBy": {
+                  "name": "John",
+                  "email": "john.doe@example.com",
+                  "phone": "123456789",
+                  "altPhone": "987654321"
+                },
+                "reservedOn": {
+                  "name": "John",
+                  "lasName": "Doe",
+                  "dni": "87654321",
+                  "age": "35",
+                  "email": "john.doe@example.com",
+                  "cel": "123456789",
+                  "reservedRoom": [],
+                  "token": "token456"
+                },
+                "bookedOn": "2024-04-01",
+                "cancelableUntil": "2024-04-08T12:00:00",
+                "canceled": false,
+                "reserved": true,
+                "confirmed": false
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "client": [
+      {
+        "name": "John",
+        "lasName": "Doe",
+        "dni": "87654321",
+        "age": "35",
+        "email": "john.doe@example.com",
+        "cel": "123456789",
+        "reservedRoom": [],
+        "token": "token456"
+      },
+      {
+        "name": "Leandro",
+        "lasName": "Veron",
+        "dni": "43028675",
+        "age": "23",
+        "email": "leandroveron110@gmail.com",
+        "cel": "123456789",
+        "reservedRoom": [],
+        "token": "token456"
+      }
+    ],
+    "admins": [
+      {
+        "name": "Admin",
+        "lasName": "AdminLastName",
+        "dni": "12345678",
+        "age": "30",
+        "reservedRoom": [],
+        "token": "token123"
+      }
+    ]
+  }
+  
