@@ -1,94 +1,97 @@
-import { IShiftsDay } from "../../models/interfaces/theater";
+import { Document } from "mongoose";
+import { IRoom, IShiftsDay } from "../../models/interfaces/theater";
 import { NotFoundError } from "../../utils/errors/errors";
 import { TheaterService } from "./Theater.service";
 
 export class ShiftsDayService extends TheaterService {
+  private async findIndexById<T extends { _id?: string }>(
+    id: string,
+    array: T[],
+    errorMessage: string
+  ) {
+    const index = array.findIndex((item) => item._id === id);
 
-    
-    async createShiftsDay(idRoom: string, shiftsDay: IShiftsDay){
-        const theater = await this.getTheater();
-
-        const room = theater.rooms.findIndex(r => r._id == idRoom);
-
-        if(room == -1){
-            throw new NotFoundError(`No se encontro el room ${idRoom}`)
-        }
-
-        theater.rooms[room].shiftsDay.push(shiftsDay);
-
-        await this.update(theater._id, theater);
-
-        return shiftsDay
+    if (index === -1) {
+      throw new NotFoundError(errorMessage);
     }
 
-    async updateShifsDay(idRoom: string, idShiftsDay: string, shiftsDay: IShiftsDay){
-        const theater = await this.getTheater();
+    return index;
+  }
 
-        const room = theater.rooms.findIndex(r => r._id == idRoom);
+  private async findRoomIndexById(idRoom: string, array: IRoom[]) {
+    return await this.findIndexById<IRoom>(
+      idRoom,
+      array,
+      `No se encontró la sala ${idRoom}`
+    );
+  }
 
-        if(room == -1){
-            throw new NotFoundError(`No se encontro el room ${idRoom}`)
-        }
+  private async findShiftsDayIndexById(
+    idShiftsDay: string,
+    array: IShiftsDay[]
+  ) {
+    return await this.findIndexById<IShiftsDay>(
+      idShiftsDay,
+      array,
+      `No se encontró el día ${idShiftsDay}`
+    );
+  }
 
-        const shiftsDayIndex =  theater.rooms[room].shiftsDay.findIndex(s => s._id == idShiftsDay);
+  async createShiftsDay(idRoom: string, shiftsDay: IShiftsDay) {
+    const theater = await this.getTheater();
+    const roomIndex = await this.findRoomIndexById(idRoom, theater.rooms);
 
-        if(room == -1){
-            throw new NotFoundError(`No se encontro el dia ${idShiftsDay}`)
-        }
+    theater.rooms[roomIndex].shiftsDay.push(shiftsDay);
+    await this.update(theater._id, theater);
 
-        theater.rooms[room].shiftsDay[shiftsDayIndex] = shiftsDay;
+    return shiftsDay;
+  }
 
-        await this.update(theater._id, theater);
+  async updateShifsDay(
+    idRoom: string,
+    idShiftsDay: string,
+    shiftsDay: IShiftsDay
+  ) {
+    const theater = await this.getTheater();
+    const roomIndex = await this.findRoomIndexById(idRoom, theater.rooms);
+    const shiftsDayIndex = await this.findShiftsDayIndexById(
+      idShiftsDay,
+      theater.rooms[roomIndex].shiftsDay
+    );
 
-        return shiftsDay
-    }
+    theater.rooms[roomIndex].shiftsDay[shiftsDayIndex] = shiftsDay;
+    await this.update(theater._id, theater);
 
+    return shiftsDay;
+  }
 
-    async deleteShiftsDay(idRoom: string, idShiftsDay: string){
-        const theater = await this.getTheater();
+  async deleteShiftsDay(idRoom: string, idShiftsDay: string) {
+    const theater = await this.getTheater();
+    const roomIndex = await this.findRoomIndexById(idRoom, theater.rooms);
 
-        const room = theater.rooms.findIndex(r => r._id == idRoom);
+    theater.rooms[roomIndex].shiftsDay = theater.rooms[
+      roomIndex
+    ].shiftsDay.filter((s) => s._id !== idShiftsDay);
+    await this.update(theater._id, theater);
 
-        if(room == -1){
-            throw new NotFoundError(`No se encontro el room ${idRoom}`)
-        }
+    return true;
+  }
 
-        theater.rooms[room].shiftsDay = theater.rooms[room].shiftsDay.filter(s=> s._id != idShiftsDay);
+  async findAllShiftsDay(idRoom: string) {
+    const theater = await this.getTheater();
+    const roomIndex = await this.findRoomIndexById(idRoom, theater.rooms);
 
-        await this.update(theater._id, theater);
+    return theater.rooms[roomIndex].shiftsDay;
+  }
 
-        return true
-    }
+  async findShiftsDayById(idRoom: string, idShiftsDay: string) {
+    const theater = await this.getTheater();
+    const roomIndex = await this.findRoomIndexById(idRoom, theater.rooms);
+    const shiftsDayIndex = await this.findShiftsDayIndexById(
+      idShiftsDay,
+      theater.rooms[roomIndex].shiftsDay
+    );
 
-    async findAllShiftsDay(idRoom: string){
-        const theater = await this.getTheater();
-
-        const room = theater.rooms.findIndex(r => r._id == idRoom);
-
-        if(room == -1){
-            throw new NotFoundError(`No se encontro el room ${idRoom}`)
-        }
-
-        return theater.rooms[room].shiftsDay
-    }
-
-
-    async findShiftsDayById(idRoom: string, idShiftsDay: string){
-        const theater = await this.getTheater();
-
-        const room = theater.rooms.findIndex(r => r._id == idRoom);
-
-        if(room == -1){
-            throw new NotFoundError(`No se encontro el room ${idRoom}`)
-        }
-
-        const shiftsDay = theater.rooms[room].shiftsDay.find(s => s._id == idShiftsDay);
-
-        if(!shiftsDay){
-            throw new NotFoundError(`No se encontro el dia ${idShiftsDay}`)
-        }
-
-        return shiftsDay
-    }
-    
+    return theater.rooms[roomIndex].shiftsDay[shiftsDayIndex];
+  }
 }

@@ -5,11 +5,11 @@ export interface ITheater extends Document {
   name: string;
   logo: string;
   rooms: IRoom[];
-  clients: Client[];
+  clients: IClient[];
   admins: Admin[];
 }
 
-export interface Admin  extends Document{
+export interface Admin extends Document {
   name: string;
   lasName: string;
   email: string;
@@ -20,19 +20,20 @@ export interface Admin  extends Document{
 }
 
 // Client
-export interface Client  extends Document{
+export interface IClient extends Document {
   name: string;
   lasName: string;
   dni: string;
-  age: string;
+  age: number;
   email: string;
   cel: string;
+  password: string;
   reservedRoom: IRoom[];
   token: string;
 }
 
 // Sala
-export interface IRoom  extends Document{
+export interface IRoom extends Document {
   name: string;
   description: string;
   capacity: number;
@@ -49,13 +50,13 @@ export interface IDimensions {
   height: string;
 }
 
-export interface IShiftsDay extends Document{
-    day: string;
-    shifts: IShift[];
+export interface IShiftsDay extends Document {
+  day: string;
+  shifts: IShift[];
 }
 
 // Tueno
-export interface IShift  extends Document{
+export interface IShift extends Document {
   date: string; // La fecha de la reserva.
   startTime: string; // La hora de inicio de la reserva.
   endTime: string; // La hora de finalización de la reserva.
@@ -65,7 +66,7 @@ export interface IShift  extends Document{
     phone: string;
     altPhone: string;
   } | null;
-  reservedOn: Client | null;
+  reservedOn: IClient | null;
   bookedOn: string | null; // La fecha en que se realizó la reserva.
   cancelableUntil: string | null;
   canceled: boolean; // si cancelaron la reserva
