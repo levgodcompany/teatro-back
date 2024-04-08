@@ -14,8 +14,6 @@ router.get("/all", clientController.findAllClient);
 
 router.get("/:idClient", clientController.findAllRoomById);
 
-router.post("/reserve", clientController.reserveShift);
-
 
 
 
