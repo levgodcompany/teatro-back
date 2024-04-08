@@ -9,7 +9,7 @@ export class ShiftsDayService extends TheaterService {
     array: T[],
     errorMessage: string
   ) {
-    const index = array.findIndex((item) => item._id === id);
+    const index = array.findIndex((item) => item._id == id);
 
     if (index === -1) {
       throw new NotFoundError(errorMessage);

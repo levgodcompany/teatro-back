@@ -68,7 +68,7 @@ export interface IShift extends Document {
   } | null;
   reservedOn: IClient | null;
   bookedOn: string | null; // La fecha en que se realizó la reserva.
-  cancelableUntil: string | null;
+  cancelableUntil: string | null; // fecha limite para cancelar la reserva
   canceled: boolean; // si cancelaron la reserva
   reserved: boolean; // Un booleano que indica si la sala está reservada o no.
   confirmed: boolean; // Un booleano que indica si la reserva está confirmada o no.

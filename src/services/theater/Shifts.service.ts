@@ -8,7 +8,7 @@ export class ShiftsService extends TheaterService {
     array: T[],
     errorMessage: string
   ): number {
-    const index = array.findIndex((item) => item._id === id);
+    const index = array.findIndex((item) => item._id == id);
 
     if (index === -1) {
       throw new NotFoundError(errorMessage);
@@ -50,6 +50,10 @@ export class ShiftsService extends TheaterService {
     await this.update(theater._id, theater);
 
     return shifts;
+  }
+
+  async reserveShift(){
+    
   }
 
   async updateShift(
@@ -111,7 +115,7 @@ export class ShiftsService extends TheaterService {
 
     const shift = theater.rooms[roomIndex].shiftsDay[
       shiftsDayIndex
-    ].shifts.find((s) => s._id === idShift);
+    ].shifts.find((s) => s._id == idShift);
     if (!shift) {
       throw new NotFoundError(`No se encontró el turno ${idShift}`);
     }

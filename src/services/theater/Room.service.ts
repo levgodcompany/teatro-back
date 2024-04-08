@@ -23,7 +23,7 @@ export class RoomService extends TheaterService {
 
   async updateRoom(idRoom: string, room: IRoom) {
     const theater = await super.getTheater();
-    const roomIndex = theater.rooms.findIndex((r) => r._id === idRoom);
+    const roomIndex = theater.rooms.findIndex((r) => r._id == idRoom);
 
     if (roomIndex === -1) {
       throw new Error(`No se encontró la sala con el ID ${idRoom}`);
@@ -58,7 +58,7 @@ export class RoomService extends TheaterService {
 
   async findRoomById(idRoom: string) {
     const theater = await super.getTheater();
-    const room = theater.rooms.find((room) => room._id === idRoom);
+    const room = theater.rooms.find((room) => room._id == idRoom);
 
     if (!room) {
       throw new NotFoundError(`No se encontró la sala`);

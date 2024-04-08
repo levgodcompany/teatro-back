@@ -5,7 +5,7 @@ export async function sendEmail(to: string, subject: string, text: string) {
     from: "levgodcompany@gmail.com",
     to,
     subject,
-    text,
+    html: text,
   };
 
   await transporter.sendMail(mailOptions);
