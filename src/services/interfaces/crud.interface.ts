@@ -1,11 +1,11 @@
-import { Types } from "mongoose";
+import { Document } from "mongoose";
 
-export type typeBootcamp = 'introduction' | 'fundamentals' | 'frontEnd' | 'backEnd' | 'databases' | 'finalProjects' | 'english'
-
-export interface CrudRef <T>{
-    findRefAll(typeBootcamp: typeBootcamp):Promise<T[]>;
-    findRefById(typeBootcamp: typeBootcamp  ,id:string | Types.ObjectId): Promise<T>;
-    createRef(typeBootcamp: typeBootcamp, create: T): Promise<T>;
-    updateRefById(typeBootcamp: typeBootcamp, id: string | Types.ObjectId, uppdate: T): Promise<T>;
-    deleteRefById(typeBootcamp: typeBootcamp, id: string | Types.ObjectId): Promise<boolean>;
-}
+// Interfaz para métodos genéricos del servicio (Principio abierto/cerrado)
+export interface IGenericService<T extends Document> {
+    findById(id: string): Promise<T | null>;
+    findAll(): Promise<T[]>;
+    create(data: T): Promise<T>;
+    updateById(id: string, data: Partial<T>): Promise<T | null>;
+    deleteById(id: string): Promise<boolean>;
+  }
+  

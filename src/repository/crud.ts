@@ -8,6 +8,13 @@ export interface CRUD<T> {
     deleteById(id: string | Types.ObjectId): Promise<boolean>;
 }
 
+export interface IRepository<T> {
+    findById(id: string): Promise<T | null>;
+    findAll(): Promise<T[]>;
+    create(data: T): Promise<T>;
+    updateById(id: string, data: Partial<T>): Promise<T | null>;
+    deleteById(id: string): Promise<boolean>;
+  }
 
 // FIND
 export interface Email<T> {

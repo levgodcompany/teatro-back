@@ -1,36 +1,86 @@
 import { Document } from "mongoose";
+import { ILocal } from "./ILocal";
+import { IClient } from "./IClient";
 
 // Teatro
 export interface ITheater extends Document {
   name: string;
   logo: string;
-  rooms: IRoom[];
+  rooms: ILocal;
   clients: IClient[];
-  admins: Admin[];
+  admins: IAdmin[];
 }
-
-export interface Admin extends Document {
+// Administrador
+export interface IAdmin extends Document {
   name: string;
-  lasName: string;
+  lastName: string;
   email: string;
-  dni: string;
-  age: string;
-  reservedRoom: IRoom[];
-  token: string;
-}
-
-// Client
-export interface IClient extends Document {
-  name: string;
-  lasName: string;
   dni: string;
   age: number;
-  email: string;
-  cel: string;
-  password: string;
-  reservedRoom: IRoom[];
   token: string;
 }
+
+
+/*
+
+type Day = "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday" | "Sunday"
+
+export interface INotClient {
+  name: string;
+  lastName: string;
+  email: string;
+  bookedOn: string | null; // Fecha en que se realizó la reserva
+  cancelableUntil: string | null; // Fecha límite para cancelar la reserva
+  canceled: boolean; // Indica si se canceló la reserva
+  reserved: boolean; // Indica si la sala está reservada
+  confirmed: boolean; // Indica si la reserva está confirmada
+}
+
+export interface IEvent {
+  title: string;
+  description: string;
+  schedule: ISchedule;
+  repeat: IRepeat;
+  reservedBy: IClient;
+  guestList: INotClient[] | IClient[]
+}
+
+
+export interface IRepeat {
+  frequency: "monthly" | "weekly" | "none",
+  repeat: number;
+  day: Day[];
+  dayMonthly: number[]
+}
+
+// Horario de Reserva
+export interface ISchedule extends Document{
+  startTime: string; // Hora de inicio de la reserva
+  endTime: string; // Hora de finalización de la reserva
+}
+
+
+// Reserva de Sala
+export interface IReservedRoom extends Document{
+  idClient: string; // El cliente que realiza la reserva
+  days: IDay[]; // Los días reservados
+}
+
+// Día de Reserva
+export interface IDay extends Document{
+  day: string; // Día de la reserva DD/MM/YYY
+  idRoom: string // Id de la sala que reservo
+  schedules: ISchedule[]; // Horarios de reserva para este día
+}
+
+// Horario de Reserva
+export interface ISchedule extends Document{
+  startTime: string; // Hora de inicio de la reserva
+  endTime: string; // Hora de finalización de la reserva
+}
+
+
+
 
 // Sala
 export interface IRoom extends Document {
@@ -38,38 +88,31 @@ export interface IRoom extends Document {
   description: string;
   capacity: number;
   dimensions: IDimensions;
-  imgs: string[];
+  images: string[]; // Cambiado de imgs a images
   value: string;
   shiftsDay: IShiftsDay[];
 }
 
-// Dimencion de la sala
+// Dimensiones de la Sala
 export interface IDimensions {
   length: string;
   width: string;
   height: string;
 }
 
+// Turno por Día
 export interface IShiftsDay extends Document {
   day: string;
   shifts: IShift[];
 }
 
-// Tueno
+// Turno
 export interface IShift extends Document {
-  date: string; // La fecha de la reserva.
-  startTime: string; // La hora de inicio de la reserva.
-  endTime: string; // La hora de finalización de la reserva.
-  rentedBy: {
-    name: string;
-    email: string;
-    phone: string;
-    altPhone: string;
-  } | null;
-  reservedOn: IClient | null;
-  bookedOn: string | null; // La fecha en que se realizó la reserva.
-  cancelableUntil: string | null; // fecha limite para cancelar la reserva
-  canceled: boolean; // si cancelaron la reserva
-  reserved: boolean; // Un booleano que indica si la sala está reservada o no.
-  confirmed: boolean; // Un booleano que indica si la reserva está confirmada o no.
+  schedule: ISchedule; // Horario de la reserva
+  bookedOn: string | null; // Fecha en que se realizó la reserva
+  cancelableUntil: string | null; // Fecha límite para cancelar la reserva
+  canceled: boolean; // Indica si se canceló la reserva
+  reserved: boolean; // Indica si la sala está reservada
+  confirmed: boolean; // Indica si la reserva está confirmada
 }
+*/
