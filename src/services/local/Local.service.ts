@@ -100,8 +100,14 @@ export class DayScheduleService extends GenericService<IDaySchedule> {
 }
 
 export class EventService extends GenericService<IEvent> {
+  private repo = new EventRepository()
   constructor() {
     super(new EventRepository());
+    this.repository = new EventRepository();
+  }
+
+  findAllEven(){
+    this.repo.findAllEvent()
   }
 }
 

@@ -157,6 +157,16 @@ export class EventRepository extends BaseRepository<IEvent>{
     super("EventModel")
   }
 
+  findAllEvent(): Promise<string[]>{
+    const strings: string[] = [];
+    strings.push("Hola");
+    return new Promise((resolve, reject) => {
+      // Realiza alguna tarea asíncrona
+      resolve(strings);
+
+    }) ;
+  }
+
 }
 
 export class FacilityRepository extends BaseRepository<IFacility>{
