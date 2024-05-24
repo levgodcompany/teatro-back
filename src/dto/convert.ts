@@ -1,1 +1,0 @@
-export type DtoConverter<T, U> = (entity: T) => U;

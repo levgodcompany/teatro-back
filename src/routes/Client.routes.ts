@@ -1,26 +1,16 @@
-import { Router } from "express";
-import { ClientController } from "../controller/Client.controller";
+import express from 'express';
+import ClientController from "../controller/Client.ctr"
+import checkPermissionService from "../services/CheckPermission.service"
 
-const clientController = new ClientController();
-const router = Router();
+const router = express.Router();
 
-// Ruta para obtener el teatro
-router.put("/:idClient", clientController.updateClient);
+// Rutas para clientes
+router.get('/client', checkPermissionService.checkPermissionOwner, ClientController.getAllClients);
+router.get('/client/:clientId', checkPermissionService.checkPermissionClient, ClientController.getClientById);
+router.put('/client/book-appointment/:clientId/add/:appointmentId', checkPermissionService.checkPermissionClient, ClientController.bookAppointment);
+router.put('/client/book-appointment/:clientId/cancel/:appointmentId', checkPermissionService.checkPermissionClient, ClientController.cancelAppointment);
+router.put('/client/:clientId', checkPermissionService.checkPermissionClient, ClientController.updateClient);
+router.delete('/client/:clientId', checkPermissionService.checkPermissionOwner, ClientController.deleteClient);
 
-// Ruta para crear el teatro
-router.delete("/:idClient", clientController.deleteClient);
-
-router.get("/all", clientController.findAllClient);
-
-router.get("/:idClient", clientController.findAllRoomById);
-
-
-
-
-// Ruta para obtener el teatro
-// router.post("/login/admin", authController.loginClient);
-
-// Ruta para crear el teatro
-// router.post("/register/admin", authController.registerClient);
 
 export default router;

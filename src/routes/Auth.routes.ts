@@ -1,19 +1,15 @@
-import { Router } from "express";
-import { AuthController } from "../controller/Auth.controller";
+import express from 'express';
+import AuthController from "../controller/Auth.ctr"
 
-const authController = new AuthController();
-const router = Router();
+const router = express.Router();
 
-// Ruta para obtener el teatro
-router.post("/login/client", authController.loginClient);
+// Rutas para Auth
+router.post('/login', AuthController.login);
+router.post('/register', AuthController.register);
 
-// Ruta para crear el teatro
-router.post("/register/client", authController.registerClient);
+router.post('/login/owner', AuthController.loginOwner);
+router.post('/register/owner', AuthController.registerOwner);
 
-// Ruta para obtener el teatro
-// router.post("/login/admin", authController.loginClient);
 
-// Ruta para crear el teatro
-// router.post("/register/admin", authController.registerClient);
 
 export default router;

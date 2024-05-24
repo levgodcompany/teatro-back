@@ -2,7 +2,8 @@ import {Response} from "express";
 import { AuthenticationError, AuthorizationError, ConflictError, CreationError, ErrorClass, ForbiddenError, NotFoundError, UnauthorizedError, ValidationError } from "./errors";
 import { respoensHandler } from "../responseHandler";
 import { HttpStatus } from "../HttpStatus";
-import { Message } from "../../dto/message";
+import { Message } from "../../DTO/message";
+
 
 // Esto se modificara por el patron de diseño Chain of Responsibility
 export class ValidErrors {

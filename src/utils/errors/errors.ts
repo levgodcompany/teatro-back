@@ -21,7 +21,7 @@ export class ConflictError extends ErrorClass {
 
   constructor(message: string) {
     super(message);
-    this.name = "ConflictError"; // Error para validaciones
+    this.name = "ValidationError"; // Error para validaciones
     this.status = HttpStatus.Conflict
   }
 }
