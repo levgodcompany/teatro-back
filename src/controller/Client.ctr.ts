@@ -9,9 +9,8 @@ class ClientController {
 
   async bookAppointment(req: Request, res: Response): Promise<void> {
     try {
-      const { clientId, appointmentId } = req.params;
-      console.log(clientId, appointmentId)
-      const client = await ClientService.bookAppointment(clientId, appointmentId)
+      const { clientId, appointmentId, roomId } = req.params;
+      const client = await ClientService.bookAppointment(clientId, roomId, appointmentId)
       res.status(201).json(client);
     } catch (error) {
       new ValidErrors(error, res).handle();

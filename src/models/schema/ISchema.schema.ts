@@ -31,6 +31,9 @@ const AppointmentSchema: Schema = new Schema<IAppointment>({
   date: { type: Date, required: true },
   start: { type: Date, required: true },
   end: { type: Date, required: true },
+  title: { type: String, required: true },
+  description: { type: String, required: true },
+  available: { type: Boolean, required: true },
   client: { type: Schema.Types.ObjectId, ref: "Client", default: null },
 });
 
@@ -38,14 +41,6 @@ const AppointmentSchema: Schema = new Schema<IAppointment>({
 const ImageSchema: Schema = new Schema<IImage>({
   url: { type: String, required: true },
   description: { type: String },
-});
-
-const RoomSchema: Schema = new Schema<IRoom>({
-  name: { type: String, required: true },
-  capacity: { type: Number, required: true },
-  availableAppointments: [{ type: Schema.Types.ObjectId, ref: "Appointment" }],
-  mainImage: { type: ImageSchema, required: true },
-  additionalImages: [ImageSchema],
 });
 
 const OpeningCloseHoursSchema: Schema = new Schema<IOpeningCloseHours>({
@@ -63,6 +58,22 @@ const OpeningDaysSchema: Schema = new Schema<IOpeningDays>({
   saturday: { type: OpeningCloseHoursSchema },
   sunday: { type: OpeningCloseHoursSchema },
 });
+
+
+const RoomSchema: Schema = new Schema<IRoom>({
+  name: { type: String, required: true },
+  capacity: { type: Number, required: true },
+  availableAppointments: [AppointmentSchema],
+  mainImage: { type: ImageSchema, required: true },
+  additionalImages: [ImageSchema],
+  phone: { type: String, required: true },
+  openingHours: { type: OpeningDaysSchema },
+  description: { type: String, required: true },
+  services: [{ type: String, required: true }],
+});
+
+
+
 
 const LocalSchema: Schema = new Schema<ILocal>({
   name: { type: String, required: true },

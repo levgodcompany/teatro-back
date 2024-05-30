@@ -1,4 +1,5 @@
 import { ILocalDTO } from "../DTO/Local/local.dto";
+import { ILocal } from "../models/interfaces/ILocal.interface";
 import { LocalModel } from "../models/schema/ISchema.schema";
 import { NotFoundError } from "../utils/errors/errors";
 import mongoose, { ObjectId } from 'mongoose';
@@ -41,7 +42,7 @@ class LocalService {
     try {
       const locals = await LocalModel.find().populate("rooms");
       if(locals.length > 0){
-        return locals[0]._id; // Convertir ObjectId a cadena de texto
+        return `${locals[0]._id}`; // Convertir ObjectId a cadena de texto
 
       }
       throw new NotFoundError(`El local no esta creado`);
@@ -74,10 +75,10 @@ class LocalService {
 
   async updateLocalInformaton(idLocal: string, localDTO: Partial<ILocalDTO>) {
     try {
-
+      const local: Partial<ILocal> = localDTO;
       const updateLocal = await LocalModel.findByIdAndUpdate(idLocal, {
-        ...localDTO
-      });
+        ...local
+      },  { new: true });
       return updateLocal;
     } catch (error) {
       throw new Error(`Error al actualizar el local: ${error}`);

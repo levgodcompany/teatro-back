@@ -50,15 +50,22 @@ export interface IAppointment extends Document {
   date: Date; // Fecha y hora del turno
   start: Date; // Hora de entrada
   end: Date; // Hora de salida
+  title: string; // Título del turno
+  description: string; // Descripción del turno
+  available: boolean; // Para saber si el turno esta o no disponible
   client: IClient["_id"] | null; // Cliente que reservó el turno
 }
 
 export interface IRoom extends Document {
   name: string; // Nombre de la sala
   capacity: number; // Capacidad máxima de personas en la sala
-  availableAppointments: IAppointment["_id"][]; // Lista de turnos disponibles en la sala
-  mainImage: IImage; // Imagen principal de la sala
-  additionalImages: IImage[]; // Lista de imágenes adicionales de la sala
+  availableAppointments: IAppointment[]; // Lista de turnos disponibles en la sala
+  phone: string; // Número de teléfono del local
+  openingHours: IOpeningDays; // Horario de apertura
+  mainImage: IImage; // Imagen principal del local
+  additionalImages: IImage[]; // Lista de imágenes adicionales del local
+  description: string; // Descripción del local
+  services: string[]; // Lista de servicios que ofrece el local
 }
 
 export interface IImage {

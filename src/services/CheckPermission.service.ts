@@ -38,7 +38,7 @@ class CheckPermissionService {
       next();
     } catch (error) {
       try {
-        console.log("authHeader", authHeader)
+
         const userOwner = await OwnerModel.findOne({ token: authHeader });
         if (userOwner) {
           next();

@@ -4,12 +4,13 @@ import { ValidErrors } from '../utils/errors/error.handle';
 import { ResponseHandler } from '../utils/responseHandler';
 import { IRoom } from '../models/interfaces/ILocal.interface';
 import { HttpStatus } from '../utils/HttpStatus';
+import { RoomDTO } from '../DTO/Room/Room.DTO';
 
 class RoomController {
   async createRoom(req: Request, res: Response): Promise<void> {
     try {
-      const { name, capacity } = req.body;
-      const newRoom = await RoomService.createRoom(name, capacity);
+      const room: RoomDTO = req.body;
+      const newRoom = await RoomService.createRoom(room);
 
       const respH = new ResponseHandler<IRoom>();
       respH.parseJson(newRoom);
@@ -24,6 +25,18 @@ class RoomController {
     try {
       const rooms = await RoomService.getAllRooms();
       const respH = new ResponseHandler<IRoom[]>();
+      respH.parseJson(rooms);
+      respH.respoensHandler(res, HttpStatus.OK);
+
+    } catch (error) {
+      new ValidErrors(error, res).handle();
+    }
+  }
+
+  async getAllIdRooms(_req: Request, res: Response): Promise<void> {
+    try {
+      const rooms = await RoomService.getAllIdRooms();
+      const respH = new ResponseHandler<any[]>();
       respH.parseJson(rooms);
       respH.respoensHandler(res, HttpStatus.OK);
 
