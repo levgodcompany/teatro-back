@@ -2,6 +2,7 @@ import mongoose, { Schema } from "mongoose";
 import {
   IAppointment,
   IClient,
+  IClientNotRegister,
   IImage,
   ILocal,
   IOpeningCloseHours,
@@ -16,6 +17,13 @@ const ClientSchema: Schema = new Schema<IClient>({
   phone: { type: String, required: true },
   password: { type: String, required: true },
   token: { type: String, required: true },
+  bookedAppointments: [{ type: Schema.Types.ObjectId, ref: "Appointment" }],
+});
+
+const ClientNotRegisterSchema: Schema = new Schema<IClientNotRegister>({
+  name: { type: String, required: true },
+  email: { type: String, required: true },
+  phone: { type: String, required: false },
   bookedAppointments: [{ type: Schema.Types.ObjectId, ref: "Appointment" }],
 });
 
@@ -35,6 +43,8 @@ const AppointmentSchema: Schema = new Schema<IAppointment>({
   description: { type: String, required: true },
   available: { type: Boolean, required: true },
   client: { type: Schema.Types.ObjectId, ref: "Client", default: null },
+  GuestListClient: [{ type: Schema.Types.ObjectId, ref: "Client", default: [] }],
+  GuestListNotClient: [{ type: Schema.Types.ObjectId, ref: "Client_not_register", default: [] }],
 });
 
 // Definición del esquema de imagen
@@ -91,6 +101,7 @@ const LocalSchema: Schema = new Schema<ILocal>({
 // Definir el modelo
 const RoomModel = mongoose.model<IRoom>("Room", RoomSchema);
 const ClientModel = mongoose.model<IClient>("Client", ClientSchema);
+const ClientNotRegisterModel = mongoose.model<IClientNotRegister>("Client_not_register", ClientNotRegisterSchema);
 const OwnerModel = mongoose.model<IOwner>("Owner", OwnerSchema);
 const AppointmentModel = mongoose.model<IAppointment>(
   "Appointment",
@@ -98,4 +109,4 @@ const AppointmentModel = mongoose.model<IAppointment>(
 );
 const LocalModel = mongoose.model<ILocal>("Local", LocalSchema);
 
-export { ClientModel, AppointmentModel, RoomModel, LocalModel, OwnerModel };
+export { ClientModel, ClientNotRegisterModel,  AppointmentModel, RoomModel, LocalModel, OwnerModel };

@@ -6,6 +6,7 @@ const router = express.Router();
 
 // Rutas para clientes
 router.get('/client', checkPermissionService.checkPermissionOwner, ClientController.getAllClients);
+router.get('/client-not-client/', checkPermissionService.checkPermissionClient, ClientController.getAllClientsAndNotClient);
 router.get('/client/:clientId', checkPermissionService.checkPermissionClient, ClientController.getClientById);
 router.put('/client/book-appointment/room/:roomId/client/:clientId/add/:appointmentId', checkPermissionService.checkPermissionClient, ClientController.bookAppointment);
 router.put('/client/book-appointment/:clientId/cancel/:appointmentId', checkPermissionService.checkPermissionClient, ClientController.cancelAppointment);

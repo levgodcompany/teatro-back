@@ -1,6 +1,7 @@
-import { AppointmentDTO, IShiftsDTO } from "../DTO/Appointment/Appointment.DTO";
+import { IShiftsDTO } from "../DTO/Appointment/Appointment.DTO";
 import { IAppointment } from "../models/interfaces/ILocal.interface";
 import {
+  AppointmentModel,
   ClientModel,
   RoomModel,
 } from "../models/schema/ISchema.schema";
@@ -9,12 +10,21 @@ import { NotFoundError } from "../utils/errors/errors";
 class AppointmentService {
   async createAppointment(appointmentDTO: IAppointment, roomId: string) {
     try {
-
-      // Agregar el turno a la lista de turnos disponibles en la sala
-      await RoomModel.findByIdAndUpdate(roomId, {
-        $push: { availableAppointments: appointmentDTO },
+      const newAppointment = new AppointmentModel(appointmentDTO);
+      const roomReuslt = await RoomModel.findByIdAndUpdate(roomId, {
+        $push: { availableAppointments: newAppointment },
       });
+      if(!roomReuslt) {
+        throw new NotFoundError(`Sala no encontrada`)
+      }else {
 
+        const room = await RoomModel.findById(roomId);
+        if (!room) {
+          throw new Error(`No se encontró la sala`);
+        }
+        return room.availableAppointments;
+
+      }
     } catch (error) {
       throw new Error(`Error al crear turno: ${error}`);
     }
@@ -22,7 +32,6 @@ class AppointmentService {
 
   async createAppointments(appointments: IAppointment[], roomId: string) {
     try {
-      // Agregar los turnos a la lista de turnos disponibles en la sala
       await RoomModel.findByIdAndUpdate(roomId, {
         $push: { availableAppointments: { $each: appointments } },
       });
@@ -39,7 +48,7 @@ class AppointmentService {
         combined.setUTCHours(hours, minutes, 0, 0);
         return combined;
       };
-      // Generar la lista de IAppointment para todos los días
+
       const appointments: IAppointment[] = shiftsDTO.days.flatMap((day) =>
         shiftsDTO.openingCloseHoursTurnos.map((turno) => {
           const date = day.date;
@@ -53,7 +62,7 @@ class AppointmentService {
             title: turno.title,
             description: turno.description,
             available: turno.available,
-            client: null, // Inicialmente sin cliente
+            client: null,
           } as IAppointment;
         })
       );
@@ -84,32 +93,55 @@ class AppointmentService {
 
   async deleteAppointment(roomId: string, appointmentId: string): Promise<void> {
     try {
-      // Buscar la sala por ID
       const room = await RoomModel.findById(roomId);
       if (!room) {
         throw new Error(`No se encontró la sala`);
       }
-  
-      // Buscar el turno específico en la lista de turnos disponibles
+
       const appointment = room.availableAppointments.find(appoint => appoint._id == appointmentId);
       if (!appointment) {
         throw new Error(`No se encontró el turno con ID ${appointmentId}`);
       }
-  
-      // Eliminar el turno de la lista de turnos disponibles en la sala
+
       await RoomModel.findByIdAndUpdate(roomId, {
         $pull: { availableAppointments: { _id: appointmentId } },
       });
-  
-      // Si el turno está reservado por un cliente, eliminar la referencia al turno en los datos del cliente
+
       if (appointment.client) {
         await ClientModel.findByIdAndUpdate(appointment.client, {
           $pull: { bookedAppointments: appointmentId },
         });
       }
-  
+
     } catch (error) {
       throw new Error(`Error al eliminar turno: ${error}`);
+    }
+  }
+
+  async updateAppointment(roomId: string, appointmentId: string, updatedData: Partial<IAppointment>): Promise<IAppointment | null> {
+    try {
+      const room = await RoomModel.findOneAndUpdate(
+        { _id: roomId, "availableAppointments._id": appointmentId },
+        {
+          $set: {
+            "availableAppointments.$": updatedData,
+          },
+        },
+        { new: true }
+      );
+
+      if (!room) {
+        throw new Error(`No se encontró la sala o el turno con ID ${appointmentId}`);
+      }
+
+      const updatedAppointment = room.availableAppointments.find(appoint => appoint._id == appointmentId);
+      if (!updatedAppointment) {
+        throw new Error(`No se encontró el turno actualizado con ID ${appointmentId}`);
+      }
+
+      return updatedAppointment;
+    } catch (error) {
+      throw new Error(`Error al actualizar turno: ${error}`);
     }
   }
 }

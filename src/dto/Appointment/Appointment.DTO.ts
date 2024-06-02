@@ -26,3 +26,11 @@ export interface IOpeningCloseHoursShiftsDTO {
     description: string; // Descripción del turno
     available: boolean; // Para saber si el turno esta o no disponible
 }
+
+
+
+export interface IShiftDTO {
+    days: IDaysDTO[];
+    openingCloseHoursTurnos: IOpeningCloseHoursShiftsDTO[];
+    roomId: string[];
+}

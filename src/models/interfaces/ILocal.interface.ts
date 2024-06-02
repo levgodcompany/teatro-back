@@ -54,6 +54,8 @@ export interface IAppointment extends Document {
   description: string; // Descripción del turno
   available: boolean; // Para saber si el turno esta o no disponible
   client: IClient["_id"] | null; // Cliente que reservó el turno
+  GuestListClient: IClient["_id"][] // lista de invitados a al turno de clientes registrado en la app
+  GuestListNotClient: IClientNotRegister["_id"][]// lista de invitados a al turno de clientes no registrado en la app
 }
 
 export interface IRoom extends Document {
@@ -71,4 +73,12 @@ export interface IRoom extends Document {
 export interface IImage {
   url: string; // URL de la imagen
   description?: string; // Descripción opcional de la imagen
+}
+
+
+export interface IClientNotRegister extends Document{
+  name: string;
+  email: string;
+  phone: string;
+  bookedAppointments: IAppointment["_id"][]; // Lista de turnos reservados por el cliente
 }
