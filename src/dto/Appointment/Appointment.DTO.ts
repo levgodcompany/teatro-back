@@ -34,3 +34,11 @@ export interface IShiftDTO {
     openingCloseHoursTurnos: IOpeningCloseHoursShiftsDTO[];
     roomId: string[];
 }
+
+
+export interface AppointmentClientDTO {
+    id: string;
+    name: string;
+    email: string;
+    phone: string;
+}

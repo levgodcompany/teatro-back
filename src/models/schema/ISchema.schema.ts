@@ -40,6 +40,7 @@ const AppointmentSchema: Schema = new Schema<IAppointment>({
   start: { type: Date, required: true },
   end: { type: Date, required: true },
   title: { type: String, required: true },
+  price: {type: Number, required: true, default: 0},
   description: { type: String, required: true },
   available: { type: Boolean, required: true },
   client: { type: Schema.Types.ObjectId, ref: "Client", default: null },

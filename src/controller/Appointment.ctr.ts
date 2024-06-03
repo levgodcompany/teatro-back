@@ -45,6 +45,31 @@ class AppointmentController {
     }
   }
 
+
+  async getClientAppointment(req: Request, res: Response): Promise<void> {
+    try {
+      const { idRoom, appointmentId }  = req.params;
+      const appointments = await AppointmentService.getClientAppointment(idRoom, appointmentId);
+      const respH = new ResponseHandler<any>();
+      respH.parseJson(appointments);
+      respH.respoensHandler(res, HttpStatus.OK);
+    } catch (error) {
+      new ValidErrors(error, res).handle();
+    }
+  }
+
+  async getAllClientAppointments(req: Request, res: Response): Promise<void> {
+    try {
+      const { idRoom, appointmentId }  = req.params;
+      const appointments = await AppointmentService.getAllClientAppointments(idRoom, appointmentId);
+      const respH = new ResponseHandler<any>();
+      respH.parseJson(appointments);
+      respH.respoensHandler(res, HttpStatus.OK);
+    } catch (error) {
+      new ValidErrors(error, res).handle();
+    }
+  }
+
   async deleteAppointment(req: Request, res: Response): Promise<void> {
     try {
       const { idRoom, appointmentId } = req.params;

@@ -51,6 +51,7 @@ export interface IAppointment extends Document {
   start: Date; // Hora de entrada
   end: Date; // Hora de salida
   title: string; // Título del turno
+  price: number;
   description: string; // Descripción del turno
   available: boolean; // Para saber si el turno esta o no disponible
   client: IClient["_id"] | null; // Cliente que reservó el turno

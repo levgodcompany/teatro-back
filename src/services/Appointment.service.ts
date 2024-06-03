@@ -1,11 +1,13 @@
-import { IShiftsDTO } from "../DTO/Appointment/Appointment.DTO";
-import { IAppointment } from "../models/interfaces/ILocal.interface";
+import { AppointmentClientDTO, AppointmentDTO, IShiftsDTO } from "../DTO/Appointment/Appointment.DTO";
+import { IAppointment, IClient } from "../models/interfaces/ILocal.interface";
 import {
   AppointmentModel,
   ClientModel,
   RoomModel,
 } from "../models/schema/ISchema.schema";
 import { NotFoundError } from "../utils/errors/errors";
+import ClientService from "./Client.service";
+import ClientNotRegisterService from "./ClientNotRegister.service";
 
 class AppointmentService {
   async createAppointment(appointmentDTO: IAppointment, roomId: string) {
@@ -86,6 +88,86 @@ class AppointmentService {
         throw new Error(`No se encontró la sala`);
       }
       return room.availableAppointments;
+    } catch (error) {
+      throw new Error(`Error al obtener turnos: ${error}`);
+    }
+  }
+
+  async getAllClientAppointments(roomId: string, appointmentId: string) {
+    try {
+      const room = await RoomModel.findById(roomId);
+      if (!room) {
+        throw new NotFoundError(`No se encontró la sala`);
+      }
+      const appointmentIndex = room.availableAppointments.findIndex(app => app._id == appointmentId);
+
+      if(appointmentIndex == -1) {
+        throw new NotFoundError(`Turno no encontrado`)
+      }
+
+      const clients: AppointmentClientDTO[] = [];
+      for(const id of room.availableAppointments[appointmentIndex].GuestListClient) {
+        const c = await ClientService.getClientById(id);
+        if(c) {
+          clients.push({
+            id: c._id,
+            email: c.email,
+            name: c.name,
+            phone: c.phone
+          })
+        }
+      }
+
+      for(const id of room.availableAppointments[appointmentIndex].GuestListNotClient) {
+        const c = await ClientNotRegisterService.getClientById(id);
+        if(c) {
+          clients.push({
+            id: c._id,
+            email: c.email,
+            name: c.name,
+            phone: c.phone
+          })
+        }
+      }
+
+      return clients
+
+    } catch (error) {
+      throw new Error(`Error al obtener turnos: ${error}`);
+    }
+  }
+
+
+  async getClientAppointment(roomId: string, appointmentId: string) {
+    try {
+      const room = await RoomModel.findById(roomId);
+      if (!room) {
+        throw new NotFoundError(`No se encontró la sala`);
+      }
+      const appointmentIndex = room.availableAppointments.findIndex(app => app._id == appointmentId);
+
+      if(appointmentIndex == -1) {
+        throw new NotFoundError(`Turno no encontrado`)
+      }
+
+      const client =  room.availableAppointments[appointmentIndex].client;
+
+      if(client) {
+        const c = await ClientService.getClientById(client);
+        if(c) {
+          const clientDto: AppointmentClientDTO = {
+            id: c._id,
+            email: c.email,
+            name: c.name,
+            phone: c.phone
+          }
+           return clientDto;
+        
+        }
+
+      }
+      throw new NotFoundError(`No existe el cliente organizador`)
+
     } catch (error) {
       throw new Error(`Error al obtener turnos: ${error}`);
     }

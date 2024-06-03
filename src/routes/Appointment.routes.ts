@@ -11,6 +11,8 @@ router.post('/appointment/all', checkPermissionService.checkPermissionOwner, App
 router.get('/appointment', checkPermissionService.checkPermissionClient, AppointmentController.getAllAppointments);
 router.delete('/room/:idRoom/appointment/:appointmentId', checkPermissionService.checkPermissionOwner, AppointmentController.deleteAppointment);
 
-
+router.get('/appointment-all-clients/room/:idRoom/appointment/:appointmentId', checkPermissionService.checkPermissionOwner, AppointmentController.getAllClientAppointments);
+router.get('/appointment-all-not-clients', checkPermissionService.checkPermissionOwner, AppointmentController.getAllAppointments);
+router.get('/organizador/room/:idRoom/appointment/:appointmentId', checkPermissionService.checkPermissionOwner, AppointmentController.getClientAppointment);
 
 export default router;
