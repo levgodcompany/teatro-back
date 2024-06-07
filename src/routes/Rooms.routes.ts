@@ -1,8 +1,10 @@
 import express from 'express';
 import RoomController from "../controller/Room.ctr"
 import checkPermissionService from "../services/CheckPermission.service"
+import multer from 'multer';
 
 const router = express.Router();
+const upload = multer({ dest: 'uploads/' });
 
 // Rutas para salas
 router.post('/room', checkPermissionService.checkPermissionOwner, RoomController.createRoom);

@@ -10,7 +10,7 @@ import ClientService from "./Client.service";
 import ClientNotRegisterService from "./ClientNotRegister.service";
 
 class AppointmentService {
-  async createAppointment(appointmentDTO: IAppointment, roomId: string) {
+  async createAppointment(appointmentDTO: Partial<IAppointment>, roomId: string) {
     try {
       const newAppointment = new AppointmentModel(appointmentDTO);
       const roomReuslt = await RoomModel.findByIdAndUpdate(roomId, {
@@ -32,7 +32,7 @@ class AppointmentService {
     }
   }
 
-  async createAppointments(appointments: IAppointment[], roomId: string) {
+  async createAppointments(appointments: Partial<IAppointment>[], roomId: string) {
     try {
       await RoomModel.findByIdAndUpdate(roomId, {
         $push: { availableAppointments: { $each: appointments } },

@@ -1,6 +1,8 @@
 import { RoomDTO, RoomIdName } from "../DTO/Room/Room.DTO";
 import { AppointmentModel, LocalModel, RoomModel } from "../models/schema/ISchema.schema"
 import { NotFoundError } from "../utils/errors/errors";
+import FirebaseServices from "./firebase/Firebase.service";
+import FirebaseService from "./firebase/Firebase.service";
 import LocalService from "./Local.service";
 
 class RoomService {
@@ -16,6 +18,7 @@ class RoomService {
         additionalImages: roomDTO.additionalImages, // Lista de imágenes adicionales del local
         description: roomDTO.description, // Descripción del local
         services: roomDTO.services, // Lista de servicios que ofrece el local
+        priceBase: roomDTO.price,
         availableAppointments: []
       });
 
@@ -114,6 +117,11 @@ class RoomService {
       throw new Error(`Error al actualizar turnos de la sala: ${error}`);
     }
   }
+
+
+
+
+
 }
 
 export default new RoomService();

@@ -74,6 +74,7 @@ const OpeningDaysSchema: Schema = new Schema<IOpeningDays>({
 const RoomSchema: Schema = new Schema<IRoom>({
   name: { type: String, required: true },
   capacity: { type: Number, required: true },
+  priceBase: { type: Number, required: true, default: 0 },
   availableAppointments: [AppointmentSchema],
   mainImage: { type: ImageSchema, required: true },
   additionalImages: [ImageSchema],

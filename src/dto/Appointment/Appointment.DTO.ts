@@ -1,4 +1,5 @@
 export interface AppointmentDTO {
+    price: number;
     date: Date; // Fecha y hora del turno
     start: Date; // Hora de entrada
     end: Date; // Hora de salida

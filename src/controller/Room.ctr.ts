@@ -85,6 +85,7 @@ class RoomController {
       new ValidErrors(error, res).handle();
     }
   }
+  
 }
 
 export default new RoomController();

@@ -4,7 +4,7 @@ import { ResponseHandler } from "../utils/responseHandler";
 import { IClient } from "../models/interfaces/ILocal.interface";
 import { HttpStatus } from "../utils/HttpStatus";
 import { ValidErrors } from "../utils/errors/error.handle";
-import { ClientDTO } from "../DTO/Clients/Clients.DTO";
+import { ClientDTO, IClientAppointmetDay, IClientSpecificDayAppointment } from "../DTO/Clients/Clients.DTO";
 import ClientNotRegisterService from "../services/ClientNotRegister.service";
 
 class ClientController {
@@ -32,6 +32,40 @@ class ClientController {
 
       const respH = new ResponseHandler<IClient>();
       respH.parseJson(client);
+      respH.respoensHandler(res, HttpStatus.OK);
+    } catch (error) {
+      new ValidErrors(error, res).handle();
+    }
+  }
+
+  async createAppointmentReservationsDays(req: Request, res: Response): Promise<void> {
+    try {
+      const { roomId } = req.params;
+      const body:IClientAppointmetDay = req.body;
+      const client = await ClientService.createAppointmentReservationsDays(
+        roomId,
+        body
+      );
+
+      const respH = new ResponseHandler<string>();
+      respH.parseJson("");
+      respH.respoensHandler(res, HttpStatus.OK);
+    } catch (error) {
+      new ValidErrors(error, res).handle();
+    }
+  }
+
+  async createAppointmentDayReservations(req: Request, res: Response): Promise<void> {
+    try {
+      const { roomId } = req.params;
+      const body:IClientSpecificDayAppointment = req.body;
+      const client = await ClientService.createAppointmentDayReservations(
+        roomId,
+        body
+      );
+
+      const respH = new ResponseHandler<string>();
+      respH.parseJson("");
       respH.respoensHandler(res, HttpStatus.OK);
     } catch (error) {
       new ValidErrors(error, res).handle();
