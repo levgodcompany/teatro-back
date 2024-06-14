@@ -1,8 +1,10 @@
 import mongoose, { Schema } from "mongoose";
 import {
+  DtoRoom,
   IAppointment,
   IClient,
   IClientNotRegister,
+  IDtoAppointment,
   IImage,
   ILocal,
   IOpeningCloseHours,
@@ -35,6 +37,12 @@ const OwnerSchema: Schema = new Schema<IOwner>({
   token: { type: String, required: true },
 });
 
+const DtoAppointmentSchema: Schema = new Schema<IDtoAppointment>({
+  dto: {type: Number, default: 0},
+  prevPrice: {type: Number, default: 0},
+  newPrice: {type: Number, default: 0}
+})
+
 const AppointmentSchema: Schema = new Schema<IAppointment>({
   date: { type: Date, required: true },
   start: { type: Date, required: true },
@@ -43,6 +51,7 @@ const AppointmentSchema: Schema = new Schema<IAppointment>({
   price: {type: Number, required: true, default: 0},
   description: { type: String, required: true },
   available: { type: Boolean, required: true },
+  dto: {type: DtoAppointmentSchema, default: null},
   client: { type: Schema.Types.ObjectId, ref: "Client", default: null },
   GuestListClient: [{ type: Schema.Types.ObjectId, ref: "Client", default: [] }],
   GuestListNotClient: [{ type: Schema.Types.ObjectId, ref: "Client_not_register", default: [] }],
@@ -50,14 +59,14 @@ const AppointmentSchema: Schema = new Schema<IAppointment>({
 
 // Definición del esquema de imagen
 const ImageSchema: Schema = new Schema<IImage>({
-  url: { type: String, required: true },
+  url: { type: String, default: "" },
   description: { type: String },
 });
 
 const OpeningCloseHoursSchema: Schema = new Schema<IOpeningCloseHours>({
-  isOpen: { type: Boolean, required: true },
-  open: { type: String, required: true },
-  close: { type: String, required: true },
+  isOpen: { type: Boolean, default: false },
+  open: { type: String, default: "" },
+  close: { type: String,  default: "" },
 });
 
 const OpeningDaysSchema: Schema = new Schema<IOpeningDays>({
@@ -71,17 +80,24 @@ const OpeningDaysSchema: Schema = new Schema<IOpeningDays>({
 });
 
 
+const DtoRoomSchema: Schema = new Schema<DtoRoom>({
+  dto: {type: Number, default: 0},
+  endHour: {type: String, default: ""},
+  startHour: {type: String, default: ""}
+})
+
 const RoomSchema: Schema = new Schema<IRoom>({
   name: { type: String, required: true },
-  capacity: { type: Number, required: true },
+  capacity: { type: Number, required: true, default: 0 },
   priceBase: { type: Number, required: true, default: 0 },
   availableAppointments: [AppointmentSchema],
   mainImage: { type: ImageSchema, required: true },
   additionalImages: [ImageSchema],
-  phone: { type: String, required: true },
+  phone: { type: String, default: "" },
   openingHours: { type: OpeningDaysSchema },
   description: { type: String, required: true },
   services: [{ type: String, required: true }],
+  dtoRoomHours: [DtoRoomSchema]
 });
 
 

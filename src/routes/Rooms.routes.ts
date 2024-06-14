@@ -12,6 +12,7 @@ router.get('/room', checkPermissionService.checkPermissionClient, RoomController
 router.get('/room/ids', checkPermissionService.checkPermissionOwner, RoomController.getAllIdRooms);
 router.get('/room/:roomId', checkPermissionService.checkPermissionClient, RoomController.getRoomById);
 router.get('/room/appointment/:roomId', checkPermissionService.checkPermissionClient, RoomController.getAllAppointmentByIDRoom);
+router.put('/room/:idRoom', checkPermissionService.checkPermissionOwner, RoomController.updateByIDRoom);
 router.put('/room/:roomId/appointments', checkPermissionService.checkPermissionOwner, RoomController.updateRoomAppointments);
 
 

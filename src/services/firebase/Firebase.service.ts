@@ -19,8 +19,7 @@ class FirebaseService {
     }
 
     async uploadFile(folder: string, file: Express.Multer.File): Promise<string> {
-        console.log("file.mimetype", file.mimetype)
-        const storageRef = ref(this.storage, `${folder}/${v4()}__${file.originalname}`);
+        const storageRef = ref(this.storage, `${folder}/${v4()}__${file.mimetype}`);
         const snapshot = await uploadBytes(storageRef, file.buffer);
         const url = await getDownloadURL(snapshot.ref);
         return url;

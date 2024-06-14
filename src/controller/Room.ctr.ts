@@ -71,6 +71,20 @@ class RoomController {
     }
   }
 
+  async updateByIDRoom(req: Request, res: Response): Promise<void> {
+    try {
+      const { idRoom } = req.params;
+      const body: Partial<IRoom> = req.body
+      const room = await RoomService.updateRoom(idRoom, body)
+
+      const respH = new ResponseHandler<IRoom | null>();
+      respH.parseJson(room);
+      respH.respoensHandler(res, HttpStatus.OK);
+    } catch (error) {
+      new ValidErrors(error, res).handle();
+    }
+  }
+
   async updateRoomAppointments(req: Request, res: Response): Promise<void> {
     try {
       const { roomId } = req.params;

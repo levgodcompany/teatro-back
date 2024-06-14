@@ -1,9 +1,8 @@
-import { RoomDTO, RoomIdName } from "../DTO/Room/Room.DTO";
 import { AppointmentModel, LocalModel, RoomModel } from "../models/schema/ISchema.schema"
+import { RoomDTO, RoomIdName } from "../DTO/Room/Room.DTO";
 import { NotFoundError } from "../utils/errors/errors";
-import FirebaseServices from "./firebase/Firebase.service";
-import FirebaseService from "./firebase/Firebase.service";
 import LocalService from "./Local.service";
+import { IRoom } from "../models/interfaces/ILocal.interface";
 
 class RoomService {
   // Método para crear una nueva sala
@@ -19,6 +18,7 @@ class RoomService {
         description: roomDTO.description, // Descripción del local
         services: roomDTO.services, // Lista de servicios que ofrece el local
         priceBase: roomDTO.price,
+        dtoRoomHours: roomDTO.dtoRoomHours,
         availableAppointments: []
       });
 
@@ -119,6 +119,16 @@ class RoomService {
   }
 
 
+  async updateRoom(idRoom: string, room: Partial<IRoom>){
+    try {
+      const res = RoomModel.findByIdAndUpdate(idRoom, {
+        ...room
+      }, {new: true});
+      return res;
+    } catch (error) {
+      throw new Error(`Error al actualizar la sala: ${error}`);
+    }
+  }
 
 
 

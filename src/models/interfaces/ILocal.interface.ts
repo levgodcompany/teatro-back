@@ -60,11 +60,18 @@ export interface IAppointment extends Document {
   end: Date; // Hora de salida
   title: string; // Título del turno
   price: number;
+  dto: IDtoAppointment | null;
   description: string; // Descripción del turno
   available: boolean; // Para saber si el turno esta o no disponible
   client: IClient["_id"] | null; // Cliente que reservó el turno
   GuestListClient: IClient["_id"][] // lista de invitados a al turno de clientes registrado en la app
   GuestListNotClient: IClientNotRegister["_id"][]// lista de invitados a al turno de clientes no registrado en la app
+}
+
+export interface IDtoAppointment {
+  dto: number; // Procentaje de descuento
+  newPrice: number; // precio con decuento
+  prevPrice: number; // precio sin descuetno
 }
 
 export interface IRoom extends Document {
@@ -78,6 +85,13 @@ export interface IRoom extends Document {
   additionalImages: IImage[]; // Lista de imágenes adicionales del local
   description: string; // Descripción del local
   services: string[]; // Lista de servicios que ofrece el local
+  dtoRoomHours: DtoRoom[]
+}
+
+export interface DtoRoom {
+  startHour: string;
+  endHour: string;
+  dto: number
 }
 
 export interface IImage {

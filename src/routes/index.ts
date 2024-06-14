@@ -1,5 +1,6 @@
 import { Router } from "express";
 import ClientRoutes from './Client.routes'
+import OwnerRoutes from './Owner.routes'
 import ClientNotRegisterRoutes from './ClientNotRegister.routes'
 import AppointmentRoutes from './Appointment.routes'
 import LocalRoutes from './Local.routes'
@@ -15,6 +16,7 @@ router.use("/local", LocalRoutes);
 router.use("/rooms", RoomsRoutes);
 router.use("/appointments", AppointmentRoutes);
 router.use("/clients", ClientRoutes);
+router.use("/owners", OwnerRoutes);
 router.use("/not-clients", ClientNotRegisterRoutes);
 
 

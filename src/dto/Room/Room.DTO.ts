@@ -1,4 +1,4 @@
-import { IImage, IOpeningDays } from "../../models/interfaces/ILocal.interface";
+import { DtoRoom, IImage, IOpeningDays } from "../../models/interfaces/ILocal.interface";
 
 export interface RoomDTO {
     name: string; // Nombre de la sala
@@ -10,6 +10,7 @@ export interface RoomDTO {
     additionalImages: IImage[]; // Lista de imágenes adicionales del local
     description: string; // Descripción del local
     services: string[]; // Lista de servicios que ofrece el local
+    dtoRoomHours: DtoRoom[]
 }
 
 export interface RoomIdName {
