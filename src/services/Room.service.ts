@@ -19,7 +19,10 @@ class RoomService {
         services: roomDTO.services, // Lista de servicios que ofrece el local
         priceBase: roomDTO.price,
         dtoRoomHours: roomDTO.dtoRoomHours,
-        availableAppointments: []
+        availableAppointments: [],
+        length: roomDTO.length,
+        Width: roomDTO.Width,
+        typeRoom: roomDTO.typeRoom
       });
 
 
@@ -124,6 +127,15 @@ class RoomService {
       const res = RoomModel.findByIdAndUpdate(idRoom, {
         ...room
       }, {new: true});
+      return res;
+    } catch (error) {
+      throw new Error(`Error al actualizar la sala: ${error}`);
+    }
+  }
+
+  async deleteRoom(idRoom: string) {
+    try {
+      const res = RoomModel.findByIdAndDelete(idRoom);
       return res;
     } catch (error) {
       throw new Error(`Error al actualizar la sala: ${error}`);

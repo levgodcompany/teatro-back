@@ -370,6 +370,19 @@ class ClientService {
     }
   }
 
+  async createAppointmentsByIDRoomAndByIDClient(idRoom: string, clientId: string, appointments: IAppointment[]) {
+    const room = await RoomService.getRoomById(idRoom);
+    if (!room) {
+      throw new NotFoundError(`Sala no encontrado`);
+    }
+    const client = ClientModel.findById(clientId);
+    if (!client) {
+      throw new NotFoundError(`Cliente no encontrado`);
+    }
+
+    await AppointmentService.addAllAppointments(appointments, idRoom);
+  }
+
   async createAppointmentDayReservations(idRoom: string, config: IClientSpecificDayAppointment) {
     try {
       const room = await RoomService.getRoomById(idRoom);

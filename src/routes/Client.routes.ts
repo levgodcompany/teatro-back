@@ -7,6 +7,7 @@ const router = express.Router();
 // Rutas para clientes
 router.get('/client', checkPermissionService.checkPermissionOwner, ClientController.getAllClients);
 
+router.post('/client/appointments/:roomId/:clientId', checkPermissionService.checkPermissionClient, ClientController.createAppointmentsByIDRoomAndByIDClient);
 router.post('/client/days/week/:roomId', checkPermissionService.checkPermissionClient, ClientController.createAppointmentReservationsDays);
 router.post('/client/days/day/:roomId', checkPermissionService.checkPermissionClient, ClientController.createAppointmentDayReservations);
 

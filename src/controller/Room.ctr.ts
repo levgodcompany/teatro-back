@@ -99,6 +99,20 @@ class RoomController {
       new ValidErrors(error, res).handle();
     }
   }
+
+  async deleteRoom (req: Request, res: Response): Promise<void> {
+    try {
+      const { roomId } = req.params;
+      const updatedRoom = await RoomService.deleteRoom(roomId);
+      
+      const respH = new ResponseHandler<string>();
+      respH.parseJson(`delete ${roomId}`);
+      respH.respoensHandler(res, HttpStatus.OK);
+      
+    } catch (error) {
+      new ValidErrors(error, res).handle();
+    }
+  }
   
 }
 

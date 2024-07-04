@@ -42,6 +42,33 @@ class AppointmentService {
     }
   }
 
+  async addAllAppointments(appointments: IAppointment[], roomId: string) {
+    try {
+      const room = await RoomModel.findById(roomId);
+      if(room) {
+        
+
+        const apps = appointments.map(a=> {
+          a.date = new Date(a.date);
+          a.start = new Date(a.start);
+          a.end = new Date(a.end);
+          a.description = "-"
+
+          const newAppointment = new AppointmentModel(a);
+          
+          return newAppointment;
+        })
+
+        await RoomModel.findByIdAndUpdate(room._id, {
+          $push: { availableAppointments: { $each: apps } }
+        })
+      }
+
+    } catch (error) {
+      throw new Error(`Error al crear turnos: ${error}`);
+    }
+  }
+
   async createAllAppointments(shiftsDTO: IShiftsDTO) {
     try {
       const combineDateAndTime = (date: Date, time: string): Date => {

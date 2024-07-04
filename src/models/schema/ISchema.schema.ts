@@ -95,9 +95,12 @@ const RoomSchema: Schema = new Schema<IRoom>({
   additionalImages: [ImageSchema],
   phone: { type: String, default: "" },
   openingHours: { type: OpeningDaysSchema },
-  description: { type: String, required: true },
+  description: { type: String, default: "" },
   services: [{ type: String, required: true }],
-  dtoRoomHours: [DtoRoomSchema]
+  dtoRoomHours: [DtoRoomSchema],
+  length: {type: Number, required: true, default: 0},
+  Width: {type: Number, required: true, default: 0},
+  typeRoom: {type: String, required: true, default: ""}
 });
 
 

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import ClientService from "../services/Client.service";
 import { ResponseHandler } from "../utils/responseHandler";
-import { IClient } from "../models/interfaces/ILocal.interface";
+import { IAppointment, IClient } from "../models/interfaces/ILocal.interface";
 import { HttpStatus } from "../utils/HttpStatus";
 import { ValidErrors } from "../utils/errors/error.handle";
 import { ClientDTO, IClientAppointmetDay, IClientSpecificDayAppointment } from "../DTO/Clients/Clients.DTO";
@@ -44,6 +44,24 @@ class ClientController {
       const body:IClientAppointmetDay = req.body;
       const client = await ClientService.createAppointmentReservationsDays(
         roomId,
+        body
+      );
+
+      const respH = new ResponseHandler<string>();
+      respH.parseJson("");
+      respH.respoensHandler(res, HttpStatus.OK);
+    } catch (error) {
+      new ValidErrors(error, res).handle();
+    }
+  }
+
+  async createAppointmentsByIDRoomAndByIDClient(req: Request, res: Response): Promise<void> {
+    try {
+      const { roomId, clientId } = req.params;
+      const body:IAppointment[] = req.body;
+      await ClientService.createAppointmentsByIDRoomAndByIDClient(
+        roomId,
+        clientId,
         body
       );
 
@@ -124,10 +142,6 @@ class ClientController {
     try {
       const { clientId } = req.params;
       const client = await ClientService.getClientById(clientId);
-      if (!client) {
-        res.status(404).json({ message: "Cliente no encontrado" });
-        return;
-      }
       res.status(200).json(client);
     } catch (error) {
       new ValidErrors(error, res).handle();
