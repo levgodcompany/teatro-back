@@ -16,7 +16,7 @@ import {
 const ClientSchema: Schema = new Schema<IClient>({
   name: { type: String, required: true },
   email: { type: String, required: true },
-  phone: { type: String, required: true },
+  phone: { type: String, default: "" },
   password: { type: String, required: true },
   token: { type: String, required: true },
   bookedAppointments: [{ type: Schema.Types.ObjectId, ref: "Appointment" }],

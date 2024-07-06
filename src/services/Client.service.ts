@@ -5,6 +5,7 @@ import {
   ClientModel,
   RoomModel,
 } from "../models/schema/ISchema.schema";
+import { Bcrypt } from "../utils/bccrypt.handle";
 import { NotFoundError } from "../utils/errors/errors";
 import AppointmentService from "./Appointment.service";
 import { IAppointmentNotModel } from "./interfaces/Appointment.interface";
@@ -66,12 +67,28 @@ class ClientService {
   // Método para actualizar un cliente existente
   async updateClient(clientId: string, updatedData: Partial<IClient>) {
     try {
-      const client = await ClientModel.findByIdAndUpdate(
-        clientId,
-        updatedData,
-        { new: true }
-      );
-      return client;
+
+      if(updatedData.password) {
+        const bccy = new Bcrypt();
+        const passEncript = await bccy.encrypt(updatedData.password);
+        updatedData.password = passEncript;
+
+        const client = await ClientModel.findByIdAndUpdate(
+          clientId,
+          updatedData,
+          { new: true }
+        );
+        return client;
+      }else {
+
+        const client = await ClientModel.findByIdAndUpdate(
+          clientId,
+          updatedData,
+          { new: true }
+        );
+        return client;
+      }
+
     } catch (error) {
       throw new Error(`Error al actualizar cliente: ${error}`);
     }

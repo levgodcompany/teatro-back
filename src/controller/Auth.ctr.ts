@@ -34,6 +34,21 @@ class AuthController {
     }
   }
 
+  async newPassword(req: Request, res: Response): Promise<void> {
+    try {
+      const { email } = req.body;
+      const client = await AuthService.newPassword(email)
+
+      const respH = new ResponseHandler<string>();
+      respH.parseJson("");
+      respH.respoensHandler(res, HttpStatus.OK);
+
+    } catch (error) {
+      new ValidErrors(error, res).handle();
+    }
+  }
+
+
   async loginOwner(req: Request, res: Response): Promise<void> {
     try {
       const { email, password } = req.body;

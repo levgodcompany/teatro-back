@@ -6,7 +6,7 @@ const router = express.Router();
 
 // Rutas para locales
 router.post('/local', checkPermissionService.checkPermissionOwner, LocalController.createLocal);
-router.get('/local', checkPermissionService.checkPermissionOwner, LocalController.getAllLocals);
+router.get('/local', checkPermissionService.checkPermissionClient, LocalController.getAllLocals);
 router.get('/id', checkPermissionService.checkPermissionClient, LocalController.getLocalID);
 router.get('/local/:localId', checkPermissionService.checkPermissionClient, LocalController.getLocalById);
 router.put('/local/:localId', checkPermissionService.checkPermissionOwner, LocalController.updateLocalInfo);
