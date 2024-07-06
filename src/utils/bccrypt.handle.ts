@@ -4,7 +4,7 @@ import jwt, { verify } from "jsonwebtoken";
 
 export class Bcrypt {
 
-  private jwtSecret = "leandroveron"
+  private jwtSecret = "teatro"
 
   // Encriptamos la password
   async encrypt(pass: string) {
