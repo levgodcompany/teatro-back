@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { ClientModel, OwnerModel } from "../models/schema/ISchema.schema";
-import { AuthenticationError, NotFoundError } from "../utils/errors/errors";
+import { AuthenticationError } from "../utils/errors/errors";
 
 class CheckPermissionService {
   // Middleware para verificar si el usuario tiene permiso para acceder a la ruta

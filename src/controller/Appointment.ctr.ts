@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import AppointmentService from '../services/Appointment.service';
 import { ValidErrors } from '../utils/errors/error.handle';
-import { AppointmentDTO, IShiftsDTO } from '../DTO/Appointment/Appointment.DTO';
+import { AppointmentDTO, IShiftsDTO } from '../DTO/Appointment/AppointmentDto';
 import { IAppointment } from '../models/interfaces/ILocal.interface';
 import { ResponseHandler } from '../utils/responseHandler';
 import { HttpStatus } from '../utils/HttpStatus';

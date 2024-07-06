@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import LocalService from '../services/Local.service';
 import { ValidErrors } from '../utils/errors/error.handle';
-import { ILocalDTO } from '../DTO/Local/local.dto';
+import { ILocalDTO } from '../DTO/Local/localDto';
 import { ResponseHandler } from '../utils/responseHandler';
 import { ILocal } from '../models/interfaces/ILocal.interface';
 import { HttpStatus } from '../utils/HttpStatus';

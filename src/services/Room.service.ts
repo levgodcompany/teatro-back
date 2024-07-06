@@ -1,5 +1,5 @@
 import { AppointmentModel, LocalModel, RoomModel } from "../models/schema/ISchema.schema"
-import { RoomDTO, RoomIdName } from "../DTO/Room/Room.DTO";
+import { RoomDTO, RoomIdName } from "../DTO/Room/RoomDto";
 import { NotFoundError } from "../utils/errors/errors";
 import LocalService from "./Local.service";
 import { IRoom } from "../models/interfaces/ILocal.interface";

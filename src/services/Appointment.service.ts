@@ -1,4 +1,4 @@
-import { AppointmentClientDTO, AppointmentDTO, IShiftsDTO } from "../DTO/Appointment/Appointment.DTO";
+import { AppointmentClientDTO, IShiftsDTO } from "../DTO/Appointment/AppointmentDto";
 import { IAppointment, IClient } from "../models/interfaces/ILocal.interface";
 import {
   AppointmentModel,

@@ -4,7 +4,7 @@ import { ValidErrors } from '../utils/errors/error.handle';
 import { ResponseHandler } from '../utils/responseHandler';
 import { IRoom } from '../models/interfaces/ILocal.interface';
 import { HttpStatus } from '../utils/HttpStatus';
-import { RoomDTO } from '../DTO/Room/Room.DTO';
+import { RoomDTO } from '../DTO/Room/RoomDto';
 
 class RoomController {
   async createRoom(req: Request, res: Response): Promise<void> {

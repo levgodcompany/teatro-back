@@ -2,7 +2,6 @@ import { sendEmail } from "../config/emailConfig";
 import { ClientModel, OwnerModel } from "../models/schema/ISchema.schema";
 import { Bcrypt } from "../utils/bccrypt.handle";
 import {
-  AuthenticationError,
   NotFoundError,
   UnauthorizedError,
 } from "../utils/errors/errors";

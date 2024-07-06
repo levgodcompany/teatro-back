@@ -1,6 +1,6 @@
 import { Response } from "express"
 import { HttpStatus } from "./HttpStatus"
-import { ResponseJSON } from "../DTO/Response.json";
+import { ResponseJSON } from "../DTO/ResponseJson";
 
 
 export const respoensHandler = <T>(res: Response, status: HttpStatus, data: T ) => res.status(status).send(data);

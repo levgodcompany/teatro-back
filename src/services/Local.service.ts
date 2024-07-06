@@ -1,8 +1,7 @@
-import { ILocalDTO } from "../DTO/Local/local.dto";
+import { ILocalDTO } from "../DTO/Local/localDto";
 import { ILocal } from "../models/interfaces/ILocal.interface";
 import { LocalModel } from "../models/schema/ISchema.schema";
 import { NotFoundError } from "../utils/errors/errors";
-import mongoose, { ObjectId } from 'mongoose';
 
 class LocalService {
   async createLocal(localDTO: ILocalDTO) {

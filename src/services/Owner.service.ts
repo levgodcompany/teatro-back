@@ -1,5 +1,5 @@
 import { IOwner } from "../models/interfaces/ILocal.interface";
-import { AppointmentModel, OwnerModel } from "../models/schema/ISchema.schema"
+import { OwnerModel } from "../models/schema/ISchema.schema"
 
 class OwnerService {
   // Método para crear un nuevo Ownere

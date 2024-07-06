@@ -1,5 +1,5 @@
 import { hash, compare } from "bcryptjs";
-import jwt, { verify } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 
 
 export class Bcrypt {

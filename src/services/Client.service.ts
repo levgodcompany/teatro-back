@@ -1,4 +1,4 @@
-import { IClientAppointmetDay, IClientSpecificDayAppointment } from "../DTO/Clients/Clients.DTO";
+import { IClientAppointmetDay, IClientSpecificDayAppointment } from "../DTO/Clients/ClientsDto";
 import { IAppointment, IClient } from "../models/interfaces/ILocal.interface";
 import {
   AppointmentModel,

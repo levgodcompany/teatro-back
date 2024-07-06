@@ -4,7 +4,7 @@ import { ResponseHandler } from "../utils/responseHandler";
 import { IAppointment, IClient } from "../models/interfaces/ILocal.interface";
 import { HttpStatus } from "../utils/HttpStatus";
 import { ValidErrors } from "../utils/errors/error.handle";
-import { ClientDTO, IClientAppointmetDay, IClientSpecificDayAppointment } from "../DTO/Clients/Clients.DTO";
+import { ClientDTO, IClientAppointmetDay, IClientSpecificDayAppointment } from "../DTO/Clients/ClientsDto";
 import ClientNotRegisterService from "../services/ClientNotRegister.service";
 
 class ClientController {
