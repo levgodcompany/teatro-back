@@ -98,8 +98,8 @@ const RoomSchema: Schema = new Schema<IRoom>({
   description: { type: String, default: "" },
   services: [{ type: String, required: true }],
   dtoRoomHours: [DtoRoomSchema],
-  length: {type: Number, required: true, default: 0},
-  Width: {type: Number, required: true, default: 0},
+  length: {type: String, required: true, default: "0"},
+  Width: {type: String, required: true, default: "0"},
   typeRoom: {type: String, required: true, default: ""}
 });
 

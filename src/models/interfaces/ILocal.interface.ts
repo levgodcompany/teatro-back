@@ -86,8 +86,8 @@ export interface IRoom extends Document {
   description: string; // Descripción del local
   services: string[]; // Lista de servicios que ofrece el local
   dtoRoomHours: DtoRoom[];
-  length: number;
-  Width: number;
+  length: string;
+  Width: string;
   typeRoom: string;
 }
 
