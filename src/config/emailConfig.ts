@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer'
 
-const EMAIL = <string>process.env.DB_URI;
-const PASS = <string>process.env.DB_URI;
+const EMAIL = <string>process.env.EMAIL_USER;
+const PASS = <string>process.env.EMAIL_PASS;
 
 export const transporter = nodemailer.createTransport({
     service: 'gmail', // Servicio de correo electrónico (Gmail, Outlook, etc.)
