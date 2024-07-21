@@ -97,7 +97,28 @@ class ClientService {
   // Método para eliminar un cliente
   async deleteClient(clientId: string): Promise<void> {
     try {
+      const client = await ClientModel.findById(clientId);
+      if(!client) throw new NotFoundError("Cliente no encontrado");
+
+      const rooms = await RoomModel.find();
+
+      for(const room of rooms){
+        room.availableAppointments = room.availableAppointments.filter(app=> {
+          if(app.client == clientId){
+            return true
+          }
+          return false
+        });
+      }
+
+      for(const room of rooms){
+        await RoomModel.findByIdAndUpdate(room._id, {
+          $pull: { availableAppointments: { _id: room.availableAppointments } },
+        });
+      }
+
       await ClientModel.findByIdAndDelete(clientId);
+
     } catch (error) {
       throw new Error(`Error al eliminar cliente: ${error}`);
     }

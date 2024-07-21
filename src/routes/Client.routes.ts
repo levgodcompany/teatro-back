@@ -16,7 +16,7 @@ router.get('/client/:clientId', checkPermissionService.checkPermissionClient, Cl
 router.put('/client/book-appointment/room/:roomId/client/:clientId/add/:appointmentId', checkPermissionService.checkPermissionClient, ClientController.bookAppointment);
 router.put('/client/book-appointment/:clientId/cancel/:appointmentId', checkPermissionService.checkPermissionClient, ClientController.cancelAppointment);
 router.put('/client/:clientId', checkPermissionService.checkPermissionClient, ClientController.updateClient);
-router.delete('/client/:clientId', checkPermissionService.checkPermissionOwner, ClientController.deleteClient);
+router.delete('/client/:clientId', checkPermissionService.checkPermissionClient, ClientController.deleteClient);
 
 
 export default router;
