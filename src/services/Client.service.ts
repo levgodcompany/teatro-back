@@ -413,12 +413,15 @@ class ClientService {
     if (!room) {
       throw new NotFoundError(`Sala no encontrado`);
     }
-    const client = ClientModel.findById(clientId);
+    const client = await ClientModel.findById(clientId);
     if (!client) {
       throw new NotFoundError(`Cliente no encontrado`);
     }
+    if(client){
+      client.model.name
+    }
 
-    await AppointmentService.addAllAppointments(appointments, idRoom);
+    await AppointmentService.addAllAppointments(appointments, idRoom, client.email);
   }
 
   async createAppointmentDayReservations(idRoom: string, config: IClientSpecificDayAppointment) {

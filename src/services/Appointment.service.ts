@@ -1,3 +1,4 @@
+import { sendEmail } from "../config/emailConfig";
 import { AppointmentClientDTO, IShiftsDTO } from "../DTO/Appointment/AppointmentDto";
 import { IAppointment, IClient } from "../models/interfaces/ILocal.interface";
 import {
@@ -42,33 +43,55 @@ class AppointmentService {
     }
   }
 
-  async addAllAppointments(appointments: IAppointment[], roomId: string) {
+  async addAllAppointments(appointments: IAppointment[], roomId: string, email: string) {
     try {
       const room = await RoomModel.findById(roomId);
-      if(room) {
-        
-
-        const apps = appointments.map(a=> {
+      if (room) {
+        const apps = appointments.map(a => {
           a.date = new Date(a.date);
           a.start = new Date(a.start);
           a.end = new Date(a.end);
-          a.description = "-"
-
+          a.description = "-";
+  
           const newAppointment = new AppointmentModel(a);
-          
           return newAppointment;
-        })
-
+        });
+  
         await RoomModel.findByIdAndUpdate(room._id, {
           $push: { availableAppointments: { $each: apps } }
-        })
+        });
+  
+        const formattedAppointments = apps.map(a => {
+          const start = a.start.toLocaleDateString("es-AR", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric"
+          });
+          const startTime = a.start.toLocaleTimeString("es-AR", {
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: true
+          });
+  
+          const endTime = a.end.toLocaleTimeString("es-AR", {
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: true
+          });
+  
+          return `* Hora de entrada: ${start} ${startTime} \n* Hora de salida: ${start} ${endTime}`;
+        }).join("\n\n");
+  
+        sendEmail(
+          email,
+          "Turnos reservados",
+          `Sala: ${room.name}\n\n\n\n${formattedAppointments}`
+        );
       }
-
     } catch (error) {
       throw new Error(`Error al crear turnos: ${error}`);
     }
   }
-
   async createAllAppointments(shiftsDTO: IShiftsDTO) {
     try {
       const combineDateAndTime = (date: Date, time: string): Date => {
